@@ -29,10 +29,10 @@ session_start();
         <?php
         //Skriver ut innehållet i $body till dokumentet.
 
-        echo $body;
+        //echo $body;
 
         echo $control;
-        echo $loggedIn;
+        //echo $loggedIn;
         ?>
         </p>
     </body>
