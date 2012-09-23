@@ -2,10 +2,10 @@
 session_start();
 
   	//länka in filer med funktioner som används
-  	require_once "classes/LoginView.php";
-    require_once "classes/LoginHandler.php";
-    require_once "classes/LoginController.php";
-    require_once "test/TestAll.php";
+  	require_once "View/LoginView.php";
+    require_once "Model/LoginHandler.php";
+    require_once "Controller/LoginController.php";
+    require_once "Tests/TestAll.php";
 
     $title = "Login form";
     $body = "";
