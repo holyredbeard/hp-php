@@ -1,6 +1,5 @@
 <?php
 session_start();
-$_SESSION = array();
 
 class LoginHandler {
 
@@ -10,13 +9,16 @@ class LoginHandler {
 	// Funktion som håller reda på om användaren är inloggad eller ej.
 	public function IsLoggedIn() {
 
-		echo "...test...";
-		print_r($_SESSION);
+		// echo "<b>LoginHandler:</b> kontrollerar om man är inloggad<br/>"; <- test-echo
+
+		// print_r($_SESSION); <- för test
 
 		if($_SESSION[$this->checkLoginState] == "isLoggedIn") {
+			// echo "<p><b>LoginHandler:</b> Returnerar true från <b>isLoggedIn()</b></p>"; <- test-echo
 			return true;
 		}
 		else {
+			// echo "<p><b>LoginHandler:</b> Returnerar false från <b>isLoggedIn()</b></p>"; <- test-echo
 			return false;
 		}
 	}
@@ -56,11 +58,12 @@ class LoginHandler {
 	}
 
 	// Funktion som om den körs loggar ut användaren genom att nollställa sessionen.
-	public function DoLogout(){
-		echo "Loggar ut!";		
+	public function DoLogout($loginView){
 		if (isset($_SESSION[$this->checkLoginState])){
 			unset($_SESSION[$this->checkLoginState]);
 		}
+
+		$loginView->DeleteCookie();
 	}
 }
 
