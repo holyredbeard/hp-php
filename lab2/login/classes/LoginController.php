@@ -7,23 +7,36 @@ class LoginController {
 		$controlInfo = "";
 
     	if ($loginHandler->IsLoggedIn()){
+        //echo "Är inloggad"; <- test-echo         
 
-    		if($loginView->TriedToLogout()){
-    			$loginView->DoLogout();
-    			$controlInfo = "<p>Du är nu utloggad!</p>";
+    		if ($loginView->TriedToLogout()){
+
+                //echo "Klickat på logut"; <- test-echo
+    			$loginHandler->DoLogout($loginView);
+    			$controlInfo = "<p>Du är utloggad!</p>";
     		}
     		else {
     			$loginView->DoLogoutBox();
     		}
     	}
     	else {
-            echo "testar en gång.... ";
-    		if($loginView->TriedToLogin()){
-    			$username = $loginView->GetUserName();
-    			$password = $loginView->GetPassword();
+            //echo "<p><b>LoginController</b>: False från IsLoggedIn()</p>"; <- test-echo
+    		if (($loginView->TriedToLogin()) || ($loginView->CookieSet())){
 
-				if($loginHandler->DoLogin($username, $password)){
-					$controlInfo = "<p>Du är inloggad!</p>";
+                //echo "Antingen har användaren försökt logga in eller finns cookie";
+
+    			$loginUsername = $loginView->GetUserName();
+    			$loginPassword = $loginView->GetPassword();
+
+				if ($loginHandler->DoLogin($loginUsername, $loginPassword)){
+
+                    // Kontrollerar om användaren klickat i "Remember me"?
+                    if ($loginView->RememberMe()){
+                        //echo "<h4>Skapar cookie</h4>";
+                        $loginView->CreateCookie($loginUsername, $loginPassword);
+                    }
+
+                    $controlInfo = "<p>Du är inloggad!</p>";
 				}
 				else {
 					$controlInfo = "<p>Fel användarnamn eller lösenord!</p>";
@@ -32,7 +45,7 @@ class LoginController {
         }
 
         if ($loginHandler->IsLoggedIn()){
-            echo "testar igen";
+            // echo "<b>LoginController:</b> Testar igen om man är inloggad."; <- test-echo
         	$html = $loginView->DoLogoutBox();
         }
         else {
@@ -41,17 +54,6 @@ class LoginController {
 
 	return $controlInfo . $html;
 
-    /*if ($loggedIn == true){
-      $body.="Du är inloggad <br/>";
-
-      if ($view->TriedToLogout()){
-        $login->DoLogout();
-      }
-    }
-    else {
-      $body.="Du är utloggad <br/>";
-    }
-	}*/
     }
 }
 ?>
