@@ -3,7 +3,7 @@ session_start();
 
   	//länka in filer med funktioner som används
   	require_once "View/LoginView.php";
-    require_once "Model/LoginHandler.php";
+    require_once "Handler/LoginHandler.php";
     require_once "Controller/LoginController.php";
     require_once "Tests/TestAll.php";
 
