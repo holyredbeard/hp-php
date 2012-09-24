@@ -12,11 +12,8 @@ class LoginView {
 	private $loginButton = "login";
 	private $logoutButton = "logout";
     private $rememberMe = "rememberMe";
-
     private $cookieUsername = "cookieUsername";
     private $cookiePassword = "cookiePassword";
-
-    //private $m_cookieLocation = "CookieMonster";
 
     // Funktion som returnerar inloggningsformuläret i (X)HTML.
 	public function DoLoginBox() {
@@ -60,7 +57,10 @@ class LoginView {
 		};
     }
 
-    // Funktion som kontrollerar om ett lösenord är ifyllt och om så är fallet returnerar detta.
+    /** Funktion som kontrollerar om ett lösenord är ifyllt och om så är fallet returnerar detta. Kontrollerar
+     *  först om det finns en kaka på klienten, och om så är fallet returneras denna. Finns ingen kaka kontrolleras
+     *  om lösenordet är ifyllt och är så fallet returneras det. I annat fall returneras null.
+     */
     public function GetPassword() {
     	if (isset($_COOKIE[$this->cookiePassword])) {
     		return $_COOKIE[$this->cookiePassword];
@@ -75,7 +75,6 @@ class LoginView {
 
     // Funktion som kontrollerar om användaren tryckte på login-knappen och returnerar 'true' om så är fallet.
     public function TriedToLogin() {
-        //echo "tried to login";
     	if (isset($_POST[$this->loginButton])) {
     		return true;
     	}
@@ -87,7 +86,6 @@ class LoginView {
     // Funktion som kontrollerar om användaren tryckte på logout-knappen och returnerar 'true' om så är fallet.
     public function TriedToLogout() {
     	if (isset($_POST[$this->logoutButton])) {
-
     		return true;
     	}
     	else {
@@ -95,10 +93,9 @@ class LoginView {
     	}
     }
 
+    // Funktion som kontrollerar om kakor är satta för användarnamn och lösenord.
     public function CookieSet(){
-        echo "checkar om cookies finns";
         if (isset($_COOKIE[$this->cookieUsername]) && isset($_COOKIE[$this->cookiePassword])){
-            echo "jepp, cookies finns!";
             return true;
         }
         else {
@@ -106,14 +103,16 @@ class LoginView {
         }
     }
 
+    // Funktion som skapar kakor med det användarnamn och lösenord som användaren fyllt i.
     public function CreateCookie($loginUsername, $loginPassword) {
-        setcookie($this->cookieUsername, $loginUsername, time() + 600000);
-        setcookie($this->cookiePassword, $loginPassword, time() + 600000);
+        setcookie($this->cookieUsername, $loginUsername, time() + 60);
+        setcookie($this->cookiePassword, $loginPassword, time() + 60);
     }
 
+    // Funktion som ta bort kakorna.
     public function DeleteCookie() {
-        setcookie($this->cookieUsername, "", time() + 600000);
-        setcookie($this->cookiePassword, "", time() + 600000);
+        setcookie($this->cookieUsername, "", time() - 60);
+        setcookie($this->cookiePassword, "", time() - 60);
         unset($_COOKIE[$this->cookieUsername]);
         unset($_COOKIE[$this->cookiePassword]);
     }

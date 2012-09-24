@@ -6,12 +6,9 @@ class LoginController {
 
 		$controlInfo = "";
 
-    	if ($loginHandler->IsLoggedIn()){
-        //echo "Är inloggad"; <- test-echo         
+    	if ($loginHandler->IsLoggedIn()){       
 
     		if ($loginView->TriedToLogout()){
-
-                //echo "Klickat på logut"; <- test-echo
     			$loginHandler->DoLogout($loginView);
     			$controlInfo = "<p>Du är utloggad!</p>";
     		}
@@ -20,20 +17,23 @@ class LoginController {
     		}
     	}
     	else {
-            //echo "<p><b>LoginController</b>: False från IsLoggedIn()</p>"; <- test-echo
-    		if (($loginView->TriedToLogin()) || ($loginView->CookieSet())){
-
-                //echo "Antingen har användaren försökt logga in eller finns cookie";
+            
+    		if ($loginView->TriedToLogin()){
 
     			$loginUsername = $loginView->GetUserName();
     			$loginPassword = $loginView->GetPassword();
+
+                if ($loginView->CookieSet()) {
+                    $loginPassword = $loginHandler->decrypt($loginPassword);
+                }
 
 				if ($loginHandler->DoLogin($loginUsername, $loginPassword)){
 
                     // Kontrollerar om användaren klickat i "Remember me"?
                     if ($loginView->RememberMe()){
-                        //echo "<h4>Skapar cookie</h4>";
-                        $loginView->CreateCookie($loginUsername, $loginPassword);
+                        
+                        $newPass = $loginHandler->encrypt($loginPassword);
+                        $loginView->CreateCookie($loginUsername, $newPass);
                     }
 
                     $controlInfo = "<p>Du är inloggad!</p>";
@@ -45,7 +45,6 @@ class LoginController {
         }
 
         if ($loginHandler->IsLoggedIn()){
-            // echo "<b>LoginController:</b> Testar igen om man är inloggad."; <- test-echo
         	$html = $loginView->DoLogoutBox();
         }
         else {

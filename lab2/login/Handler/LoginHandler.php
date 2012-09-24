@@ -6,19 +6,13 @@ class LoginHandler {
 	// Privat variabel för hantering av session.
 	private $checkLoginState = 'login_session';
 
-	// Funktion som håller reda på om användaren är inloggad eller ej.
+	// Funktion som håller reda på om användaren är inloggad eller ej
 	public function IsLoggedIn() {
 
-		// echo "<b>LoginHandler:</b> kontrollerar om man är inloggad<br/>"; <- test-echo
-
-		// print_r($_SESSION); <- för test
-
 		if($_SESSION[$this->checkLoginState] == "isLoggedIn") {
-			// echo "<p><b>LoginHandler:</b> Returnerar true från <b>isLoggedIn()</b></p>"; <- test-echo
 			return true;
 		}
 		else {
-			// echo "<p><b>LoginHandler:</b> Returnerar false från <b>isLoggedIn()</b></p>"; <- test-echo
 			return false;
 		}
 	}
@@ -31,8 +25,12 @@ class LoginHandler {
 		if ($username != null && $password != null){
 			switch ($username){
 				case "henke";
-			  	if ($password == "1234"){
+
+				echo "Lösen är: " . $password;
+
+			  	if ($password == "1234" ){
 			  		$_SESSION[$this->checkLoginState] = "isLoggedIn";
+			  		echo "röv";
 			  		return true;
 			  	}
 			  	else return false;
@@ -49,10 +47,13 @@ class LoginHandler {
 					$_SESSION[$this->checkLoginState] = "isLoggedIn";
 					return true;
 				}
-				else return false;
+				else {
+					return false;
+				}
 			}
 		}
 		else {
+			echo "tomt";
 			return false;
 		}
 	}
@@ -63,7 +64,25 @@ class LoginHandler {
 			unset($_SESSION[$this->checkLoginState]);
 		}
 
+		// Kör funktionen DeleteCookie för att ta bort kakorna
 		$loginView->DeleteCookie();
+	}
+
+	function encrypt($toBeEncrypted) {
+		$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
+		$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+		$key = "The secret key is";
+		$encrypedText = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $key, $toBeEncrypted, MCRYPT_MODE_ECB, $iv));
+
+		return $encrypedText;
+	}
+
+	function decrypt($encrypedText) {
+		$key = "The secret key is";
+		$decryptedText = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, base64_decode($encrypedText), MCRYPT_MODE_ECB);
+
+		//$decryptedText = strval($decryptedText);
+		return $decryptedText;
 	}
 }
 
