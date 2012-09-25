@@ -53,13 +53,13 @@ class LoginController {
         }
 
         if ($loginHandler->IsLoggedIn()){
-        	$html = $loginView->DoLogoutBox();
+        	$xhtml = $loginView->DoLogoutBox();
         }
         else {
-        	$html = $loginView->DologinBox();
+        	$xhtml = $loginView->DologinBox();
         }
 
-	return $controlInfo . $html;
+	return $controlInfo . $xhtml;
 
     }
 }

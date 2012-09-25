@@ -3,25 +3,34 @@ session_start();
 
 	require_once "View/LoginView.php";
 	require_once "Handler/LoginHandler.php";
-	require_once "View/FileUploadView.php";
-	require_once "Handler/FileUploadHandler.php";
 
-$html = "<h1>Tester</h1>";
+	$xhtml = "<h1>Tester</h1>";
 
+	class TestAll {
 
-/* --------------- Test av inloggning ------------------- */
+		/**
+		 * Kör testerna
+		 * 
+		 * @return String, XHTML
+		 */
+		public static function RunTests(){
 
-// Test av LoginHandler
-$html .= "<hr><h2>Test av Login</h2>";
-if (LoginHandler::Test() == false) {
-	$html .= "<br/>Testet av LoginHandler() misslyckades.<hr/>";
-}
-else {
-	$html .= "<br/>Testet av LoginHandler() lyckades.<hr/>";
-}
+			/* --------------- Test av inloggning ------------------- */
 
+			$xhtml .= "<hr><h2>Test av Login</h2>";
+			if (LoginHandler::Test() == false) {
+				$xhtml .= "<br/>Testet av LoginHandler() misslyckades.<hr/>";
+			}
+			else {
+				$xhtml .= "<br/>Testet av LoginHandler() lyckades.<hr/>";
+			}
 
-/* --------------- Test av filuppladdning ------------------- */
+			return $xhtml;
+		}
+	}
+
+	// Kör TestAll() för att köra testerna.
+	$xhtml .= TestAll::RunTests();
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -34,12 +43,10 @@ else {
     <body class="">
         <p>
         <?php
-        //Skriver ut innehållet i $body till dokumentet.
 
-        //echo $body;
-
-        echo $html;
-        //echo $loggedIn;
+        //Skriver ut innehållet i dokumentet.
+        echo $xhtml;
+        
         ?>
         </p>
     </body>
