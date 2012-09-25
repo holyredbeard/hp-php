@@ -105,8 +105,8 @@ class LoginView {
 
     // Funktion som skapar kakor med det användarnamn och lösenord som användaren fyllt i.
     public function CreateCookie($loginUsername, $loginPassword) {
-        setcookie($this->cookieUsername, $loginUsername, time() + 60);
-        setcookie($this->cookiePassword, $loginPassword, time() + 60);
+        setcookie($this->cookieUsername, $loginUsername, time() + 6000);
+        setcookie($this->cookiePassword, $loginPassword, time() + 6000);
     }
 
     // Funktion som ta bort kakorna.
