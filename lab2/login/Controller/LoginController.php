@@ -27,19 +27,27 @@ class LoginController {
                     $loginPassword = $loginHandler->decrypt($loginPassword);
                 }
 
-				if ($loginHandler->DoLogin($loginUsername, $loginPassword)){
+                $loginTry = $loginHandler->DoLogin($loginUsername, $loginPassword);
+
+				if ($loginTry === true){
 
                     // Kontrollerar om användaren klickat i "Remember me"?
                     if ($loginView->RememberMe()){
                         
                         $newPass = $loginHandler->encrypt($loginPassword);
+
                         $loginView->CreateCookie($loginUsername, $newPass);
+
                     }
 
                     $controlInfo = "<p>Du är inloggad!</p>";
 				}
+                else if ($loginTry === "empty"){
+                    $controlInfo = "<p>Du måste fylla i både användarnamn och lösenord!";
+                }
+
 				else {
-					$controlInfo = "<p>Fel användarnamn eller lösenord!</p>";
+					$controlInfo = "Fel användarnamn eller lösenord!</p>";
 				}
     		}
         }
