@@ -5,16 +5,24 @@ session_start();
   	require_once "View/LoginView.php";
     require_once "Handler/LoginHandler.php";
     require_once "Controller/LoginController.php";
-    //require_once "TestAll.php";
 
     $title = "Login form";
     $body = "";
 
-    $loginHandler = new LoginHandler();
-    $loginView = new LoginView();
-    $controller = new LoginController();
+    class MasterController{
 
-    $control = $controller->DoControl($loginHandler, $loginView);
+        public static function DoControl(){
+            $loginHandler = new LoginHandler();
+            $loginView = new LoginView();
+            $controller = new LoginController();
+
+            $body .= $controller->DoControl($loginHandler, $loginView);
+
+            return $body;
+        }
+    }
+
+    $body = MasterController::DoControl();
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -31,7 +39,7 @@ session_start();
 
         //echo $body;
 
-        echo $control;
+        echo $body;
         //echo $loggedIn;
         ?>
         </p>
