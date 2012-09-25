@@ -6,7 +6,10 @@ class LoginHandler {
 	// Privat variabel för hantering av session.
 	private $checkLoginState = 'login_session';
 
-	// Funktion som håller reda på om användaren är inloggad eller ej
+	/**
+	 * Kontrollera om användaren är inloggad
+	 * @return boolean
+	 */
 	public function IsLoggedIn() {
 
 		if($_SESSION[$this->checkLoginState] == "isLoggedIn") {
@@ -17,17 +20,23 @@ class LoginHandler {
 		}
 	}
 
-	// Funktion som tar emot användarnamn och lösenord via två parametrar, och via en switch-sats dels kontrollerar
-	// att inloggnings-fälten inte är tomma och vidare kontrollerar användarnamn och lösenord mot de hårdkodade användarna.
-	// Om användarnamn och lösenord är korrekta sätts sessions-variabeln till 'isLoggedIn' samt att funktionen returnerar true (i annat fall false).
+	/**
+	 * Logga in användaren
+	 * 
+	 * @param String, $username, användarnamnet
+	 * @param String, $password, lösenordet
+	 * @return boolean
+	 */
 	public function DoLogin($username, $password){
 
+		// Kontrollera så att användarnamn och lösenord är ifyllda
 		if ($username != null && $password != null){
 
+			//Kontrollerar genom en switch-sats om inloggningsuppgifterna är korrekta eller ej.
 			switch ($username){
 				case "henke";
 
-			  	if ($password == 1234 ){
+			  	if ($password == "1234" ){
 			  		$_SESSION[$this->checkLoginState] = "isLoggedIn";
 			  		return true;
 			  	}
@@ -57,16 +66,22 @@ class LoginHandler {
 			}
 		}
 		else {
-			return "empty";
+			// Returnerar "emptyField" om användarnamn eller/och lösenord saknas.
+			return "emptyField";
 		}
 	}
 
-	// Funktion som om den körs loggar ut användaren genom att nollställa sessionen.
+	/**
+	 * Logga ut användaren
+	 * 
+	 * @param Object $loginView instans av LoginView()
+	 */
 	public function DoLogout($loginView){
 		if (isset($_SESSION[$this->checkLoginState])){
 			unset($_SESSION[$this->checkLoginState]);
 
-			$loginView->DeleteCookie();		// Kör funktionen DeleteCookie för att ta bort kakorna
+			// Kör funktionen DeleteCookie för att ta bort kakorna.
+			$loginView->DeleteCookie();
 		}
 	}
 
@@ -163,13 +178,6 @@ class LoginHandler {
 			$encryptationTest = $LoginHandler->decrypt($encryptationTest);
 
 			if ($encryptationTest != $notEncryptedPass){
-
-				$newpassLenght = strlen($encryptationTest);
-				$oldpassLenght = strlen($notEncryptedPass);
-
-				echo "Dekrypterat: " . $encryptationTest . ", size: " . $newpassLenght . "</br>";
-				echo "Ej krypterat: " . $notEncryptedPass . ", size: " . $oldpassLenght . "</br>";
-				echo "Test 8: Decrypt(), misslyckades (lösenordet återställdes inte).";
 				return false;
 			}
 

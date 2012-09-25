@@ -18,6 +18,8 @@ session_start();
 			/* --------------- Test av inloggning ------------------- */
 
 			$xhtml .= "<hr><h2>Test av Login</h2>";
+
+			
 			if (LoginHandler::Test() == false) {
 				$xhtml .= "<br/>Testet av LoginHandler() misslyckades.<hr/>";
 			}
@@ -46,7 +48,7 @@ session_start();
 
         //Skriver ut innehållet i dokumentet.
         echo $xhtml;
-        
+
         ?>
         </p>
     </body>
