@@ -5,7 +5,7 @@ session_start();
   	require_once "View/LoginView.php";
     require_once "Handler/LoginHandler.php";
     require_once "Controller/LoginController.php";
-    require_once "Tests/TestAll.php";
+    //require_once "TestAll.php";
 
     $title = "Login form";
     $body = "";
