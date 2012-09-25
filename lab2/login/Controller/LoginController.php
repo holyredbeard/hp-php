@@ -17,14 +17,14 @@ class LoginController {
     		}
     	}
     	else {
-            
-    		if ($loginView->TriedToLogin()){
+
+            if ($loginView->TriedToLogin() || $loginView->CookieSet()){
 
     			$loginUsername = $loginView->GetUserName();
     			$loginPassword = $loginView->GetPassword();
 
                 if ($loginView->CookieSet()) {
-                    $loginPassword = $loginHandler->decrypt($loginPassword);
+                    $loginPassword = $loginHandler->Decrypt($loginPassword);
                 }
 
                 $loginTry = $loginHandler->DoLogin($loginUsername, $loginPassword);
@@ -34,9 +34,9 @@ class LoginController {
                     // Kontrollerar om användaren klickat i "Remember me"?
                     if ($loginView->RememberMe()){
                         
-                        $newPass = $loginHandler->encrypt($loginPassword);
+                        $loginPassword = $loginHandler->Encrypt($loginPassword);
 
-                        $loginView->CreateCookie($loginUsername, $newPass);
+                        $loginView->CreateCookie($loginUsername, $loginPassword);
 
                     }
 
