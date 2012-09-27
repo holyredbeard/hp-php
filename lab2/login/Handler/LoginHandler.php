@@ -5,6 +5,7 @@ class LoginHandler {
 
 	// Privat variabel för hantering av session.
 	private $checkLoginState = 'login_session';
+	private $sessionCheck = "isLoggedIn";
 
 	/**
 	 * Kontrollera om användaren är inloggad
@@ -12,7 +13,7 @@ class LoginHandler {
 	 */
 	public function IsLoggedIn() {
 
-		if($_SESSION[$this->checkLoginState] == "isLoggedIn") {
+		if($_SESSION[$this->checkLoginState] == $this->sessionCheck) {
 			return true;
 		}
 		else {
@@ -37,7 +38,7 @@ class LoginHandler {
 				case "henke";
 
 			  	if ($password == "1234" ){
-			  		$_SESSION[$this->checkLoginState] = "isLoggedIn";
+			  		$_SESSION[$this->checkLoginState] = $this->sessionCheck;
 			  		return true;
 			  	}
 			  	else {
@@ -47,7 +48,7 @@ class LoginHandler {
 				case "nisse";
 
 				if ($password === "abcd"){
-					$_SESSION[$this->checkLoginState] = "isLoggedIn";
+					$_SESSION[$this->checkLoginState] = $this->sessionCheck;
 					return true;
 				}
 				else {
@@ -57,7 +58,7 @@ class LoginHandler {
 
 				case "laban";
 				if ($password == "qwerty"){
-					$_SESSION[$this->checkLoginState] = "isLoggedIn";
+					$_SESSION[$this->checkLoginState] = $this->sessionCheck;
 					return true;
 				}
 				else {
@@ -76,7 +77,7 @@ class LoginHandler {
 	 * 
 	 * @param Object $loginView instans av LoginView()
 	 */
-	public function DoLogout($loginView){
+	public function DoLogout(LoginView $loginView){
 		if (isset($_SESSION[$this->checkLoginState])){
 			unset($_SESSION[$this->checkLoginState]);
 
