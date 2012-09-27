@@ -1,7 +1,5 @@
 <?php
 
-require_once "./View/LoginView.php";
-
 class LoginController {
 
     /**
