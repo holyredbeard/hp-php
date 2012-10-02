@@ -1,6 +1,6 @@
 <?php
 
-	require_once "../Controller/LoginController.php";
+	require_once ('../Controller/LoginController.php');
 
 	class TestAll {
 

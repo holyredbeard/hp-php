@@ -1,4 +1,7 @@
 <?php
+
+namespace Model;
+
 session_start();
 
 class LoginHandler {
@@ -77,7 +80,7 @@ class LoginHandler {
 	 * 
 	 * @param Object $loginView instans av LoginView()
 	 */
-	public function DoLogout(LoginView $loginView){
+	public function DoLogout(\View\LoginView $loginView){
 		if (isset($_SESSION[$this->checkLoginState])){
 			unset($_SESSION[$this->checkLoginState]);
 
@@ -124,7 +127,7 @@ class LoginHandler {
 	public static function Test() {
 
 			$LoginHandler = new LoginHandler();
-			$loginView = new LoginView();
+			$loginView = new \View\LoginView();
 
 			$LoginHandler->DoLogout($loginView);	// loggar ut användaren som förberedelse för testerna.
 				

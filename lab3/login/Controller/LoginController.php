@@ -1,5 +1,7 @@
 <?php
 
+namespace Controller;
+
 class LoginController {
 
     /**
@@ -9,7 +11,7 @@ class LoginController {
      * @param $loginView, instance of LoginView()
      * @return String, XHTML
      */
-	public function DoControl(LoginHandler $loginHandler, LoginView $loginView){
+	public function DoControl(\Model\LoginHandler $loginHandler, \View\LoginView $loginView){
 
 		$controlInfo = "";
 
@@ -22,7 +24,7 @@ class LoginController {
                 // Kör DoLogout() för att logga ut användaren
     			$loginHandler->DoLogout($loginView);
     			
-                $controlInfo = LoginView::LOGGED_OUT;
+                $controlInfo = \View\LoginView::LOGGED_OUT;
     		}
 
             // Har användaren inte försökt logga ut visas logout-knappen
@@ -57,15 +59,15 @@ class LoginController {
 
                     }
 
-                    $controlInfo = LoginView::LOGGED_IN;
+                    $controlInfo = \View\LoginView::LOGGED_IN;
 
 				}
                 else if ($loginTry === "emptyField"){
-                    $controlInfo = LoginView::EMPTY_FIELD;
+                    $controlInfo = \View\LoginView::EMPTY_FIELD;
                 }
 
 				else {
-                    $controlInfo = LoginView::WRONG_USERNAME_OR_PASSWORD;
+                    $controlInfo = \View\LoginView::WRONG_USERNAME_OR_PASSWORD;
 				}
     		}
         }

@@ -1,5 +1,7 @@
 <?php
 
+namespace View;
+
 /**
  * A view that only generates output 
  * This view is/can be used from several controllers
