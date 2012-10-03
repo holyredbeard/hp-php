@@ -10,6 +10,25 @@ class LoginHandler {
 	private $checkLoginState = 'login_session';
 	private $sessionCheck = "isLoggedIn";
 
+	private $m_db = null;
+
+	public function __construct($db) {
+		// TODO: Implement test
+		$this->m_db = $db;
+	}
+
+	public InsertNewUser() {
+		// TODO: Implement test
+		// TODO: Implement function
+		return false;
+	}
+
+	public ControlUser() {
+		// TODO: Implement test
+		// TODO: Implement function
+		return false;
+	}
+
 	/**
 	 * Kontrollera om användaren är inloggad
 	 * @return boolean
@@ -33,46 +52,7 @@ class LoginHandler {
 	 */
 	public function DoLogin($username, $password){
 
-		// Kontrollera så att användarnamn och lösenord är ifyllda
-		if ($username != null && $password != null){
-
-			//Kontrollerar genom en switch-sats om inloggningsuppgifterna är korrekta eller ej.
-			switch ($username){
-				case "henke";
-
-			  	if ($password == "1234" ){
-			  		$_SESSION[$this->checkLoginState] = $this->sessionCheck;
-			  		return true;
-			  	}
-			  	else {
-			  		return false;	
-			  	}
-
-				case "nisse";
-
-				if ($password === "abcd"){
-					$_SESSION[$this->checkLoginState] = $this->sessionCheck;
-					return true;
-				}
-				else {
-					echo $password;
-					return false;
-				}
-
-				case "laban";
-				if ($password == "qwerty"){
-					$_SESSION[$this->checkLoginState] = $this->sessionCheck;
-					return true;
-				}
-				else {
-					return false;
-				}
-			}
-		}
-		else {
-			// Returnerar "emptyField" om användarnamn eller/och lösenord saknas.
-			return "emptyField";
-		}
+		
 	}
 
 	/**
@@ -184,6 +164,8 @@ class LoginHandler {
 			if ($encryptationTest != $notEncryptedPass){
 				return false;
 			}
+
+			if ()
 
 			return true;
 		}

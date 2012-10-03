@@ -3,10 +3,12 @@ session_start();
 
   	//länka in filer med funktioner som används
   	require_once ('View/LoginView.php');
-    require_once ('Model/LoginHandler.php');
+
     require_once ('Controller/LoginController.php');
-    require_once ('db/DBConfig.php');
-    require_once ('db/Database.php');
+
+    require_once ('Model/LoginHandler.php');
+    require_once ('Model/DBConfig.php');
+    require_once ('Model/Database.php');
 
     $title = "Login form";
     $body = "";
@@ -15,6 +17,10 @@ session_start();
     class MasterController{
 
         public static function DoControl(){
+
+            $db = new \Model\Database();
+            $db->Connect(new \Model\DBConfig());
+
             $loginHandler = new \Model\LoginHandler();
             $loginView = new \View\LoginView();
             $controller = new \Controller\LoginController();

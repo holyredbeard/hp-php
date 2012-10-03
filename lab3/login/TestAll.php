@@ -2,7 +2,7 @@
 session_start();
 
 	require_once "View/LoginView.php";
-	require_once "Handler/LoginHandler.php";
+	require_once "Model/LoginHandler.php";
 
 	$xhtml = "<h1>Tester</h1>";
 
