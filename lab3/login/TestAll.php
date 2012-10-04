@@ -3,6 +3,8 @@ session_start();
 
 	require_once "View/LoginView.php";
 	require_once "Model/LoginHandler.php";
+	require_once "Model/Database.php";
+	require_once "Model/DBConfig.php";
 
 	$xhtml = "<h1>Tester</h1>";
 
@@ -15,12 +17,15 @@ session_start();
 		 */
 		public static function RunTests(){
 
+			$db = new \Model\Database();
+            $db->Connect(new \Model\DBConfig());
+
 			/* --------------- Test av inloggning ------------------- */
 
 			$xhtml .= "<hr><h2>Test av Login</h2>";
 
 			
-			if (LoginHandler::Test() == false) {
+			if (\Model\LoginHandler::Test($db) == false) {
 				$xhtml .= "<br/>Testet av LoginHandler() misslyckades.<hr/>";
 			}
 			else {

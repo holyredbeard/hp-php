@@ -2,11 +2,15 @@
 session_start();
 
   	//länka in filer med funktioner som används
-  	require_once ('View/LoginView.php');
+  	require_once ('View/RegisterView.php');
+    require_once ('View/LoginView.php');
 
+    require_once ('Controller/RegisterController.php');
     require_once ('Controller/LoginController.php');
 
+    require_once ('Model/RegisterHandler.php');
     require_once ('Model/LoginHandler.php');
+
     require_once ('Model/DBConfig.php');
     require_once ('Model/Database.php');
 
@@ -21,11 +25,22 @@ session_start();
             $db = new \Model\Database();
             $db->Connect(new \Model\DBConfig());
 
-            $loginHandler = new \Model\LoginHandler();
-            $loginView = new \View\LoginView();
-            $controller = new \Controller\LoginController();
+            // Initiate objects for registering
 
-            $body .= $controller->DoControl($loginHandler, $loginView);
+            $registerHandler = new \Model\RegisterHandler($db);
+            $registerView = new \View\RegisterView();
+            $registerController = new \Controller\RegisterController();
+
+            // Initiate objects for login
+            $loginHandler = new \Model\LoginHandler($db);
+            $loginView = new \View\LoginView();
+            $loginController = new \Controller\LoginController();
+
+
+            $body .= $loginController->DoControl($loginHandler, $loginView, $registerView);
+
+            //Close the database since it is no longer used
+            $db->Close();
 
             return $body;
         }

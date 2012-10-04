@@ -11,12 +11,12 @@ class LoginController {
      * @param $loginView, instance of LoginView()
      * @return String, XHTML
      */
-	public function DoControl(\Model\LoginHandler $loginHandler, \View\LoginView $loginView){
+	public function DoControl(\Model\LoginHandler $loginHandler, \View\LoginView $loginView, \View\RegisterView $registerView){
 
 		$controlInfo = "";
 
         // Kontrollerar om användaren loggat in
-    	if ($loginHandler->IsLoggedIn()){       
+    	if ($loginHandler->IsLoggedIn()){      
 
             // Kontrollerar om användaren försökt logga ut
     		if ($loginView->TriedToLogout()){
@@ -50,7 +50,7 @@ class LoginController {
                 $loginTry = $loginHandler->DoLogin($loginUsername, $loginPassword);
 
 				if ($loginTry === true){
-
+                    //echo "true";
                     if ($loginView->RememberMe()){
                         
                         // Krypterar lösenordet och skapar cookies hos klienten.
@@ -63,7 +63,7 @@ class LoginController {
 
 				}
                 else if ($loginTry === "emptyField"){
-                    $controlInfo = \View\LoginView::EMPTY_FIELD;
+                    $controlInfo = \View\LoginView::EMPTY_FIELD;    // TODO: behöver imlementera detta!
                 }
 
 				else {
@@ -79,6 +79,7 @@ class LoginController {
         }
         else {
         	$xhtml = $loginView->DologinBox();
+            $xhtml.= $registerView->DoRegisterButton();
         }
 
 	return $controlInfo . $xhtml;

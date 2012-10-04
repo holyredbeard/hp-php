@@ -12,33 +12,29 @@ class LoginHandler {
 
 	private $m_db = null;
 
-	public function __construct($db) {
-		// TODO: Implement test
+	public function __construct(Database $db) {
+		// TODO: Implement
 		$this->m_db = $db;
 	}
 
-	public InsertNewUser() {
-		// TODO: Implement test
-		// TODO: Implement function
-		return false;
-	}
+	/*public InsertNewUser($username, $password) {
 
-	public ControlUser() {
 		// TODO: Implement test
 		// TODO: Implement function
 		return false;
-	}
+	}*/
 
 	/**
 	 * Kontrollera om användaren är inloggad
 	 * @return boolean
 	 */
 	public function IsLoggedIn() {
-
 		if($_SESSION[$this->checkLoginState] == $this->sessionCheck) {
+			//echo "is logged in</br>";
 			return true;
 		}
 		else {
+			//echo "is logged out</br>";
 			return false;
 		}
 	}
@@ -52,7 +48,20 @@ class LoginHandler {
 	 */
 	public function DoLogin($username, $password){
 
+		$query = "SELECT * FROM Users WHERE username=? AND password=?"; 
+		$stmt = $this->m_db->Prepare($query);
+
+		$stmt->bind_param("ss", $username, $password);
 		
+		$ret = $this->m_db->CheckUser($stmt);
+		
+		$stmt->close();
+
+		if ($ret === true){
+			$_SESSION[$this->checkLoginState] = $this->sessionCheck;
+		}
+
+		return $ret;
 	}
 
 	/**
@@ -104,9 +113,9 @@ class LoginHandler {
 	 *
 	 * @return boolean
 	 */
-	public static function Test() {
+	public static function Test(Database $db) {
 
-			$LoginHandler = new LoginHandler();
+			$LoginHandler = new LoginHandler($db);
 			$loginView = new \View\LoginView();
 
 			$LoginHandler->DoLogout($loginView);	// loggar ut användaren som förberedelse för testerna.
@@ -131,7 +140,7 @@ class LoginHandler {
 
 			// Test 4: Kolla så att man är inloggad.
 			if ($LoginHandler->IsLoggedIn() == false){
-				echo "Test 4: IsLoggedIn(), misslyckades (ej var inloggad).";
+				echo "Test 4: IsLoggedIn(), misslyckades (var ej inloggad).";
 				return false;
 			}
 
@@ -165,7 +174,7 @@ class LoginHandler {
 				return false;
 			}
 
-			if ()
+			/*if ()*/
 
 			return true;
 		}
