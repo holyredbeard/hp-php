@@ -1,0 +1,114 @@
+<?php
+
+namespace View;
+
+class RegisterView {
+
+	    // Variablar för formulär.
+	private $registerUserName = "username";
+	private $registerPassword = "password";
+	private $registerPassword2 = "password2";
+    private $registerButton = "registerButton";
+    private $registerCancel = "registerCancel";
+
+    private $register = "register";
+
+    /**
+     * Generera och returnera registrerings-formulär
+     *
+     * @return String, HTML
+     */
+	public function DoRegisterBox() {
+		return "<div id='form'>
+				<form id='form2' method='post' action=''>
+					<fieldset>
+						<label for='$this->registerUserName'>Username:<br /><input type='text' id='$this->registerUserName' name='$this->registerUserName' size='20' /></label><br/>
+						<label for='$this->registerPassword' >Password:<br /><input type='password' id='$this->registerPassword' name='$this->registerPassword' size='20' /></label><br/>
+						<label for='$this->registerPassword2' >Repeat password:<br /><input type='password' id='$this->registerPassword2' name='$this->registerPassword2' size='20' /></label><br/>
+						<input type='submit' id='$this->registerButton' name='$this->registerButton' value='Register' />
+						<input type='button' name='$this->registerCancel' value='Cancel' /></label>
+					</fieldset>
+				</form>
+			</div>";
+	}
+
+	/**
+     * Generera och returnera registrerings-knapp
+     *
+     * @return String, HTML
+     */
+	public function DoRegisterButton() {
+		return "<form method='post' action=''>
+					<input type='submit' id='$this->register' name='$this->register' value='Register' />
+			</form>";
+	}
+
+	/**
+    * Returnera användarnamn från formulär
+    * 
+    * @return boolean
+    */
+	public function GetUsername() {
+		if (isset($_POST[$this->registerUserName])){
+            return $_POST[$this->registerUserName];
+        }
+		else {
+			return null;
+		};
+	}
+
+	/**
+    * Returnera lösenord från forumlär
+    * 
+    * @return boolean
+    */
+	public function GetPassword() {
+		if (isset($_POST[$this->registerPassword])){
+            return $_POST[$this->registerPassword];
+        }
+		else {
+			return null;
+		};
+	}
+
+	/**
+    * Returnera upprepat lösenord från formulär
+    * 
+    * @return boolean
+    */
+	public function GetPasswordMatching() {
+		if (isset($_POST[$this->registerPassword2])){
+            return $_POST[$this->registerPassword2];
+        }
+		else {
+			return null;
+		};
+	}
+
+	/**
+    * Returnerar true om lösenorden matchar
+    * 
+    * @return boolean
+    */
+	public function CheckPasswordMatch ($password, $password2) {
+		if ($password === $password2) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+    * Kontrollera om användaren klickat på registrerings-knappen
+    * 
+    * @return boolean
+    */
+    public function WantToRegister() {
+    	if (isset($_POST[$this->register])) {
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
+    }
+}
