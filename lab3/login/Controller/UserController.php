@@ -2,18 +2,25 @@
 
 namespace Controller;
 
+require_once ('View/UserView.php');
+
 class UserController {
 
-	private $userIdArray = array();
-	private $userNameArray = array();
+	private $_userIdArray = array();
+	private $_userNameArray = array();
 	
-	public function DoControl(\Model\UserHandler $userHandler, \View\UserView $userView) {
+	public function DoControl(\Model\UserHandler $userHandler, $userView) {
 
 		$xhtml = "";
+		$userArray = array();
 
-		$xhtml = $userView::ShowUsers();
+		if ($userView->TriedToRemoveUser()) {
+			$userIds = $userView->GetUsersToRemove();
+		}
 
-		//$xhtml = $userHandler->GetAllUsers();
+		$userArray = $userHandler->GetAllUsers();
+
+		$xhtml = $userView->ShowUsers($userArray);
 
 		/* if ($userView->TriedToRemoveUser()) {
 			$userView->GetUserToRemove();

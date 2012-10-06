@@ -2,20 +2,30 @@
 
 namespace View;
 
+/**
+ * A view that only generates output 
+ * This view is/can be used from several controllers
+ */
 class UserView {
 
-	public function ShowUsers() {
+	private $_checkBox = 'check[]';
+	private $_submitRemove = 'submitRemove';
 
-		$userNameArray = array("foo", "bar", "hallo", "world");
+	public function ShowUsers($userArray) {
 
-		$userIdArray = array(1, 2, 3);
+		$userIdArray = $userArray[0];
+		$userNameArray = $userArray[1];
 
-		$users = "";
-		$nrOfUsers = count($userNameArray);
+		//$usersToRemove = array();
+
+		$users = '';
+
+		$nrOfUsers = count($userIdArray);
 
 		for ($i = 0; $i < $nrOfUsers; $i++) {
 			$users .= "<label for='$userIdArray[$i]'>
-						$userNameArray[$i]<input type='checkbox' name='$userIdArray[$i]' value='$userNameArray[$i]' /><br/>
+						$userNameArray[$i]
+						<input type='checkbox' name='$this->_checkBox' value='$userIdArray[$i]' /><br/>
 						</label>";
 		}
 		
@@ -24,7 +34,7 @@ class UserView {
 						<fieldset>
 							<p>Existing users</p>
 							$users
-							<input type='submit' Value='Ta bort' />
+							<input type='submit' id='$this->_submitRemove' name='$this->_submitRemove' Value='Ta bort' />
 						</fieldset>
 					</form>
 					</div>";
@@ -33,14 +43,25 @@ class UserView {
 	}
 
 	public function TriedToRemoveUser() {
+		if (isset($_POST[$this->_submitRemove])) {
+			return true;        
+        }
+        else {
+        	return false;
+        }
 
 	}
 
-	public function GetUserToRemove() {
-		if (isset($_POST[$this->loginUserName])){
-            return $_POST[$this->loginUserName];
+	// TODO: Kolla vad göra här då det är strängberoenden. Dock ser jag inget annat alternativ.
+	// Anledningen är att man inte kan hämta ut check[], då den egentligen endast heter check.
+	// Kolla med stack?
+	public function GetUsersToRemove() {
+		if (isset($_POST['check'])) {
+			echo "slep";
+            return $_POST['check'];
         }
 		else {
+			echo "yep";
 			return null;
 		};
 	}

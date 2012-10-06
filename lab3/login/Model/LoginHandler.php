@@ -13,7 +13,6 @@ class LoginHandler {
 	private $m_db = null;
 
 	public function __construct(Database $db) {
-		// TODO: Implement
 		$this->m_db = $db;
 	}
 

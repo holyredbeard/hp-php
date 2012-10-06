@@ -37,7 +37,7 @@ session_start();
             $registerHandler = new \Model\RegisterHandler($db);
             $loginHandler = new \Model\LoginHandler($db);
             $encryptionHandler = new \Model\EncryptionHandler();
-            $userHandler = new \Model\UserHandler();
+            $userHandler = new \Model\UserHandler($db);
 
             $registerController = new \Controller\RegisterController();
             $loginController = new \Controller\LoginController();

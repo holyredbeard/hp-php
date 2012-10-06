@@ -75,6 +75,37 @@ class Database {
             return $ret;
     }
 
+    public function GetUsers(\mysqli_stmt $stmt) {
+            $userArray = array(
+                0 => array(),
+                1 => array()
+            );
+            
+            if ($stmt === FALSE) {
+                    throw new \Exception($this->mysqli->error);
+            }
+            
+            //execute the statement
+            if ($stmt->execute() == FALSE) {
+                    throw new \Exception($this->mysqli->error);
+            }
+            $ret = 0;
+                
+            //Bind the $ret parameter so when we call fetch it gets its value
+            if ($stmt->bind_result($field1, $field2, $field3) == FALSE) {
+                throw new \Exception($this->mysqli->error);
+            }
+            
+            while ($stmt->fetch()) {
+                array_push($userArray[0], $field1);
+                array_push($userArray[1], $field2);
+            }
+            
+            $stmt->Close();
+            
+            return $userArray;
+    }
+
     public function Close() {
             return $this->mysqli->close();
     }
