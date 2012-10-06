@@ -62,7 +62,7 @@ class Database {
      * @param $stmt mysqli_stmt 
      * @return integer insert id  
      */
-    /*public function RunInsertQuery(\mysqli_stmt $stmt) {
+    public function RunInsertQuery(\mysqli_stmt $stmt) {
                     
             if ($stmt->execute() == FALSE) {
                     throw new \Exception($this->mysqli->error);
@@ -70,10 +70,10 @@ class Database {
             
             $ret = $stmt->insert_id;
             
-            $stmt->close();
+            $stmt->Close();
             
             return $ret;
-    }*/
+    }
 
     public function Close() {
             return $this->mysqli->close();

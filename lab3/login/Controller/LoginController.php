@@ -11,7 +11,10 @@ class LoginController {
      * @param $loginView, instance of LoginView()
      * @return String, XHTML
      */
-	public function DoControl(\Model\LoginHandler $loginHandler, \View\LoginView $loginView, \View\RegisterView $registerView){
+	public function DoControl(\Model\LoginHandler $loginHandler,
+                              \View\LoginView $loginView,
+                              \View\RegisterView $registerView,
+                              \Model\EncryptionHandler $encryptionHandler) {
 
 		$controlInfo = "";
 
@@ -41,9 +44,9 @@ class LoginController {
     			$loginUsername = $loginView->GetUserName();
     			$loginPassword = $loginView->GetPassword();
 
-                // Kontrollerar om cookies finns och om så är fallet dekrypteras lösenordet
-                if ($loginView->CookieSet()) {
-                    $loginPassword = $loginHandler->Decrypt($loginPassword);
+                // Kontrollerar om cookies finns och om så inte är fallet krypteras lösenordet
+                if ($loginView->CookieSet() == false) {
+                    $loginPassword = $encryptionHandler->Encrypt($loginPassword);
                 }
 
                 // Loggar in användaren (hur inloggningen gick returneras)
@@ -54,7 +57,7 @@ class LoginController {
                     if ($loginView->RememberMe()){
                         
                         // Krypterar lösenordet och skapar cookies hos klienten.
-                        $loginPassword = $loginHandler->Encrypt($loginPassword);
+                        $loginPassword = $encryptHandler->Encrypt($loginPassword);
                         $loginView->CreateCookie($loginUsername, $loginPassword);
 
                     }

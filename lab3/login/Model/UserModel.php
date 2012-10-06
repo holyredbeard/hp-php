@@ -1,5 +1,7 @@
 <?php
 
-public class User {
+namespace Model;
+
+class UserHandler {
 	
 }

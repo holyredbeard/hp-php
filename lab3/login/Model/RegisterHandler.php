@@ -3,23 +3,38 @@
 namespace Model;
 
 class RegisterHandler {
+
+	private $m_db = null;
+
+	public function __construct(Database $db) {
+		// TODO: Implement
+		$this->m_db = $db;
+	}
 	
 
 	public function DoRegister($username, $password){
 
-		/*$query = "SELECT * FROM Users WHERE username=? AND password=?"; 
+		$query = "INSERT INTO Users (username, password) VALUES (?, ?)";
+
 		$stmt = $this->m_db->Prepare($query);
 
 		$stmt->bind_param("ss", $username, $password);
 		
-		$ret = $this->m_db->CheckUser($stmt);
-		
-		$stmt->close();
+		$ret = $this->m_db->RunInsertQuery($stmt);
 
-		if ($ret === true){
-			$_SESSION[$this->checkLoginState] = $this->sessionCheck;
+		return $ret;
+	}	
+
+	/**
+    * Returnerar true om lösenorden matchar
+    * 
+    * @return boolean
+    */
+	public function CheckPasswordMatch ($password, $password2) {
+		if ($password === $password2) {
+			return true;
 		}
 
-		return $ret;*/
+		return false;
 	}
 }

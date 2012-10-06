@@ -101,19 +101,6 @@ class RegisterView {
 		};
    	}
 
-	/**
-    * Returnerar true om lösenorden matchar
-    * 
-    * @return boolean
-    */
-	public function CheckPasswordMatch ($password, $password2) {
-		if ($password === $password2) {
-			return true;
-		}
-
-		return false;
-	}
-
     /**
     * Kontrollera om användaren valt att skicka in registrerings-formuläret
     * 

@@ -1,19 +1,23 @@
 <?php
 session_start();
 
-  	//länka in filer med funktioner som används
-  	require_once ('View/RegisterView.php');
-    require_once ('View/LoginView.php');
-
-    require_once ('Controller/RegisterController.php');
-    require_once ('Controller/LoginController.php');
-
+    // Models
+    require_once ('Model/DBConfig.php');
+    require_once ('Model/Database.php');
     require_once ('Model/RegisterHandler.php');
     require_once ('Model/LoginHandler.php');
     require_once ('Model/EncryptionHandler.php');
-    require_once ('Model/DBConfig.php');
-    require_once ('Model/Database.php');
+    require_once ('Model/UserHandler.php');
 
+  	//Views
+  	require_once ('View/RegisterView.php');
+    require_once ('View/LoginView.php');
+    require_once ('View/UserView.php');
+
+    // Controllers
+    require_once ('Controller/RegisterController.php');
+    require_once ('Controller/LoginController.php');
+    require_once ('Controller/UserController.php');
 
     $title = "Login form";
     $body = "";
@@ -25,16 +29,18 @@ session_start();
             $db = new \Model\Database();
             $db->Connect(new \Model\DBConfig());
 
-            // Initiate objects for registering
-
-            $registerHandler = new \Model\RegisterHandler($db);
+            // Initiate objects
             $registerView = new \View\RegisterView();
-            $registerController = new \Controller\RegisterController();
-
-            // Initiate objects for login
-            $loginHandler = new \Model\LoginHandler($db);
             $loginView = new \View\LoginView();
+            
+            $registerHandler = new \Model\RegisterHandler($db);
+            $loginHandler = new \Model\LoginHandler($db);
+            $encryptionHandler = new \Model\EncryptionHandler();
+            $userHandler = new \Model\UserHandler();
+
+            $registerController = new \Controller\RegisterController();
             $loginController = new \Controller\LoginController();
+            $userController = new \Controller\UserController();
 
             /*
             alternativ till nedan:
@@ -49,10 +55,15 @@ session_start();
 
             // TODO: Kontrollera om det är okej att göra på detta sätt!
             if ($registerView->WantToRegister() || $registerView->TredToRegister()) {
-                $body .= $registerController->DoControl($registerHandler, $registerView, $loginView);
+                $body .= $registerController->DoControl($registerHandler, $registerView, $loginView, $encryptionHandler);
             }
             else {
-                $body .= $loginController->DoControl($loginHandler, $loginView, $registerView);
+                $body .= $loginController->DoControl($loginHandler, $loginView, $registerView, $encryptionHandler);
+                
+                // TODO: Kolla om det finns annat sätt att kolla detta, t ex med en private variabel bool som sätts (true/false)
+                if ($loginHandler->IsLoggedIn() === true){
+                    echo "logged in!";
+                }
             }
 
             //Close the database since it is no longer used
