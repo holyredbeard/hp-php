@@ -10,13 +10,13 @@ session_start();
 
     require_once ('Model/RegisterHandler.php');
     require_once ('Model/LoginHandler.php');
-
+    require_once ('Model/EncryptionHandler.php');
     require_once ('Model/DBConfig.php');
     require_once ('Model/Database.php');
 
+
     $title = "Login form";
     $body = "";
-
 
     class MasterController{
 
@@ -36,8 +36,24 @@ session_start();
             $loginView = new \View\LoginView();
             $loginController = new \Controller\LoginController();
 
+            /*
+            alternativ till nedan:
 
             $body .= $loginController->DoControl($loginHandler, $loginView, $registerView);
+
+            if ($body === false){
+                $body .= $registerController->DoControl($registerHandler, $registerView, $loginView);
+            }
+
+             */
+
+            // TODO: Kontrollera om det är okej att göra på detta sätt!
+            if ($registerView->WantToRegister() || $registerView->TredToRegister()) {
+                $body .= $registerController->DoControl($registerHandler, $registerView, $loginView);
+            }
+            else {
+                $body .= $loginController->DoControl($loginHandler, $loginView, $registerView);
+            }
 
             //Close the database since it is no longer used
             $db->Close();
