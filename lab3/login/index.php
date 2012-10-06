@@ -32,6 +32,7 @@ session_start();
             // Initiate objects
             $registerView = new \View\RegisterView();
             $loginView = new \View\LoginView();
+            $userView = new \View\UserView();
             
             $registerHandler = new \Model\RegisterHandler($db);
             $loginHandler = new \Model\LoginHandler($db);
@@ -62,7 +63,7 @@ session_start();
                 
                 // TODO: Kolla om det finns annat sätt att kolla detta, t ex med en private variabel bool som sätts (true/false)
                 if ($loginHandler->IsLoggedIn() === true){
-                    echo "logged in!";
+                    $body .= $userController->DoControl($userHandler, $userView);
                 }
             }
 
