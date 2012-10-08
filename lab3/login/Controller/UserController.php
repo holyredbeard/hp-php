@@ -17,14 +17,16 @@ class UserController {
 		if ($userView->TriedToRemoveUser()) {
 			$userIds = $userView->GetUsersToRemove();
 
-			$removeTry = $userHandler->RemoveUser($userIds);
+			if ($userIds != 0) {
+				$removeTry = $userHandler->RemoveUser($userIds);
 
-			if ($removeTry == true) {
-				// TODO: Ev. lägga till mer sofistikerat meddelande?
-				$xhtml = "Failed to remove user(s)!";
-			}
-			else {
-				$xhtml = "User(s) successfully removed!";
+				if ($removeTry == true) {
+					// TODO: Ev. lägga till mer sofistikerat meddelande?
+					$xhtml = "Failed to remove user(s)!";
+				}
+				else {
+					$xhtml = "User(s) successfully removed!";
+				}
 			}
 		}
 

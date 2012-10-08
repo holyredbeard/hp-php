@@ -52,7 +52,7 @@ session_start();
             }
 
             // TODO: Kolla om det finns annat sätt att kolla detta, t ex med en private variabel bool som sätts (true/false)
-            if ($loginHandler->IsLoggedIn() === true){
+            if ($loginHandler->IsLoggedIn()){
                 $body .= $userController->DoControl($userHandler, $userView);
             }
 

@@ -16,13 +16,6 @@ class LoginHandler {
 		$this->m_db = $db;
 	}
 
-	/*public InsertNewUser($username, $password) {
-
-		// TODO: Implement test
-		// TODO: Implement function
-		return false;
-	}*/
-
 	/**
 	 * Kontrollera om användaren är inloggad
 	 * @return boolean
@@ -56,7 +49,7 @@ class LoginHandler {
 		
 		$stmt->close();
 
-		if ($ret === true){
+		if ($ret){
 			$_SESSION[$this->checkLoginState] = $this->sessionCheck;
 		}
 

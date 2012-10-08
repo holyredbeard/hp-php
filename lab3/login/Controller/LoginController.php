@@ -52,7 +52,7 @@ class LoginController {
                 // Loggar in användaren (hur inloggningen gick returneras)
                 $loginTry = $loginHandler->DoLogin($loginUsername, $loginPassword);
 
-				if ($loginTry === true){
+				if ($loginTry){
                     //echo "true";
                     if ($loginView->RememberMe()){
                         

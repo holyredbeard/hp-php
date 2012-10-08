@@ -17,8 +17,6 @@ class UserView {
 		$userNameArray = $userArray[1];
 		$usersToInclude = implode(",", $userNameArray);
 
-		echo $users;		// username1,username2...
-
 		$nrOfUsers = count($userIdArray);
 
 		for ($i = 0; $i < $nrOfUsers; $i++) {
@@ -37,8 +35,6 @@ class UserView {
 						</fieldset>
 					</form>
 					</div>";
-
-		echo $users;
 
 		return $userList;
 	}

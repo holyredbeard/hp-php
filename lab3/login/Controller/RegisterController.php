@@ -23,12 +23,12 @@ class RegisterController {
 
             $checkPasswordMatch = $registerHandler->checkPasswordMatch($regPassword, $regPasswordMatch);
 
-            if ($checkPasswordMatch === true) {
+            if ($checkPasswordMatch) {
                 $encryptedPass = $encryptionHandler->Encrypt($regPassword);
 
                 $regTry = $registerHandler->DoRegister($regUsername, $encryptedPass);
 
-                if ($regTry === true) {
+                if ($regTry) {
                     $xhtml = \View\RegisterView::SUCCESSFULLY_REGISTERED;
                     $xhtml.= $loginController->DoControl($loginHandler, $loginView, $registerView, $encryptionHandler);
                 }
