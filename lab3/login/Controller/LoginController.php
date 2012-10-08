@@ -48,12 +48,14 @@ class LoginController {
                 if ($loginView->CookieSet() == false) {
                     $loginPassword = $encryptionHandler->Encrypt($loginPassword);
                 }
+                else {
+                    $loginPassword = $encryptionHandler->Decrypt($loginPassword);
+                }
 
                 // Loggar in användaren (hur inloggningen gick returneras)
                 $loginTry = $loginHandler->DoLogin($loginUsername, $loginPassword);
 
 				if ($loginTry){
-                    //echo "true";
                     if ($loginView->RememberMe()){
                         
                         // Krypterar lösenordet och skapar cookies hos klienten.
