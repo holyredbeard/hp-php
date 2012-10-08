@@ -1,3 +1,33 @@
+body {
+	font-family: verdana;
+	font-size: 12px;
+}
+
 form {
+	border: 0px solid black;
 	width: 200px;
+}
+
+#loginForm {
+	width: 200px;
+	margin: 0px auto;
+}
+
+#container {
+	margin:0px auto;
+	width: 200px;
+}
+
+#userList {
+
+}
+
+.success {
+	background: green;
+	padding: 2px;
+}
+
+.fail {
+	background:red;
+	padding: 2px;
 }

@@ -20,12 +20,12 @@ class UserController {
 			if ($userIds != 0) {
 				$removeTry = $userHandler->RemoveUser($userIds);
 
-				if ($removeTry == true) {
+				if ($removeTry) {
 					// TODO: Ev. lägga till mer sofistikerat meddelande?
-					$xhtml = "Failed to remove user(s)!";
+					$xhtml = \View\UserView::USER_REMOVED;
 				}
 				else {
-					$xhtml = "User(s) successfully removed!";
+					$xhtml = \View\UserView::FAILED_TO_REMOVE_USER;
 				}
 			}
 		}

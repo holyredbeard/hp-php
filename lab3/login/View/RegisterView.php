@@ -14,8 +14,11 @@ class RegisterView {
     private $register = "register";
 
     // Variablar för meddelanden.
-    const SUCCESSFULLY_REGISTERED = '<p>Registrering lyckades. Logga in med det användarnamn och lösenord du registrerade dig med.</p>';
-    const PASSWORD_DID_NOT_MATCH = '<p>Lösenorden matchade inte!</p>';
+    const SUCCESSFULLY_REGISTERED = "<p class='success'>Registrering lyckades.</p><p>Logga in med det användarnamn och lösenord du registrerade dig med.</p>";
+    const PASSWORD_DID_NOT_MATCH = "<p class='fail'>Lösenorden matchade inte!</p>";
+    const WRONG_USERNAME_FORMAT = "<p class='fail'>Username contains illegal characters</p>";
+    const PASSWORD_WRONG_FORMAT = "<p class='fail'>Password is in wrong format</p>";
+    const PASSWORD_TO_SHORT = "<p class='fail'>Password is too short (minimum 6 characters)</p>";
 
     /**
      * Generera och returnera registrerings-formulär

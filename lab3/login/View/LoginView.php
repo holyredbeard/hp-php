@@ -20,10 +20,10 @@ class LoginView {
     private $_cookiePassword = 'cookiePassword';
 
     // Variablar för meddelanden.
-    const LOGGED_OUT = '<p>Du are logged out!</p>';
-    const LOGGED_IN = '<p>You are logged in!</p>';
-    const EMPTY_FIELD = '<p>You need to fill in both username and password!';
-    const WRONG_USERNAME_OR_PASSWORD = 'Wrong username and/or password!</p>';
+    const LOGGED_OUT = "<p class='succses'>You are logged out!</p>";
+    const LOGGED_IN = "<p class='success'>You are logged in!</p>";
+    const EMPTY_FIELD = "<p class='fail'>You need to fill in both username and password!";
+    const WRONG_USERNAME_OR_PASSWORD = "<p class='fail'>Wrong username and/or password!</p>";
 
     /**
      * Generera och returnera inloggnings-formulär
@@ -31,7 +31,7 @@ class LoginView {
      * @return String,  HTML
      */
 	public function DoLoginBox() {
-  		return "<div id='form'>
+  		return "<div id='loginForm'>
 					<form id='form1' method='post' action=''>
 						<fieldset>
 							<label for='$this->_loginUserName'>Name:<br /><input type='text' id='$this->_loginUserName' name='$this->_loginUserName' size='20' /></label><br/>
@@ -49,9 +49,11 @@ class LoginView {
      * @return String,  HTML
      */
 	public function DoLogoutBox() {
-		return "<form method='post' action=''>
-					<input type='submit' id='$this->_logoutButton' name='$this->_logoutButton' value='Logout' />
-				</form>";
+		return "<div id='logoutButton'>
+                    <form method='post' action=''>
+    					<input type='submit' id='$this->_logoutButton' name='$this->_logoutButton' value='Logout' />
+    				</form>
+                </div>";
   	}
 
     /**

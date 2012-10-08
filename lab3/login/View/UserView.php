@@ -11,6 +11,10 @@ class UserView {
 	private $_checkBox = 'check[]';
 	private $_submitRemove = 'submitRemove';
 
+	// Variablar för meddelanden.
+    const USER_REMOVED = "<p class='success'>User(s) successfully removed!</p>";
+    const FAILED_TO_REMOVE_USER = "<p class='fail'>Failed to remove user(s)!</p>";
+
 	public function ShowUsers($userArray) {
 
 		$userIdArray = $userArray[0];
@@ -26,14 +30,14 @@ class UserView {
 						</label>";
 		}
 		
-		$userList = "<div class='userList'>
-					<form id='form3' method='post' action=''>
-						<fieldset>
-							<p>Existing users</p>
-							$users
-							<input type='submit' id='$this->_submitRemove' name='$this->_submitRemove' Value='Ta bort' />
-						</fieldset>
-					</form>
+		$userList = "<div id='userList'>
+						<form id='form3' method='post' action=''>
+							<fieldset>
+								<p><h3>Delete users</h3></p>
+								<p>$users</p>
+								<input type='submit' id='$this->_submitRemove' name='$this->_submitRemove' Value='Delete' />
+							</fieldset>
+						</form>
 					</div>";
 
 		return $userList;

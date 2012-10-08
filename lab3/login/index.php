@@ -74,17 +74,19 @@ session_start();
         <link rel="stylesheet" type="text/css" href="style.css" />
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     </head>
-    <body class="">
-        <p>
-        <?php
-        //Skriver ut innehållet i $body till dokumentet.
+    <body>
+            <div id='container'>
+                <p>
+                <?php
+                //Skriver ut innehållet i $body till dokumentet.
 
-        //echo $body;
+                //echo $body;
 
-        echo $body;
-        //echo $loggedIn;
-        ?>
-        </p>
+                echo $body;
+                //echo $loggedIn;
+                ?>
+                </p>
+            </div>
         <script src="js/jquery-1.7.1.js"></script>
         <script src="js/external.js"></script>
     </body>

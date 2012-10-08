@@ -2,10 +2,13 @@
 
 namespace Controller;
 
+require_once ('Model/Validation.php');
+
 class RegisterController {
 
 	public function DoControl(\Model\RegisterHandler $registerHandler, \View\RegisterView $registerView, \Model\EncryptionHandler $encryptionHandler, \Model\LoginHandler $loginHandler) {
 
+        $validation = new \Model\Validation();
         $loginView = new \View\loginView();
         $loginController = new \Controller\loginController();
 
@@ -18,12 +21,20 @@ class RegisterController {
     	else if ($registerView->TredToRegister()) {
     		
             $regUsername = $registerView->GetUsername();
-            $regPassword = $registerView->GetPassword();
-            $regPasswordMatch = $registerView->GetPasswordMatching();
+            $checkUserName = $validation->ValidateUsername($regUsername);
+            echo $checkUserName;
 
-            $checkPasswordMatch = $registerHandler->checkPasswordMatch($regPassword, $regPasswordMatch);
+            $regPassword = $registerView->GetPassword();
+
+            $checkPasswordMatch = $registerHandler->checkPasswordMatch($regPassword, $registerView->GetPasswordMatching());
 
             if ($checkPasswordMatch) {
+                $checkPassword = $validation->ValidatePassword($regPassword);
+
+                if ($checkUserName == true) {
+                    echo "jepppp";
+                }
+                
                 $encryptedPass = $encryptionHandler->Encrypt($regPassword);
 
                 $regTry = $registerHandler->DoRegister($regUsername, $encryptedPass);
