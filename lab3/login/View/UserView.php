@@ -15,17 +15,16 @@ class UserView {
 
 		$userIdArray = $userArray[0];
 		$userNameArray = $userArray[1];
+		$usersToInclude = implode(",", $userNameArray);
 
-		//$usersToRemove = array();
-
-		$users = '';
+		echo $users;		// username1,username2...
 
 		$nrOfUsers = count($userIdArray);
 
 		for ($i = 0; $i < $nrOfUsers; $i++) {
 			$users .= "<label for='$userIdArray[$i]'>
 						$userNameArray[$i]
-						<input type='checkbox' name='$this->_checkBox' value='$userIdArray[$i]' /><br/>
+						<input type='checkbox' user='$userNameArray[$i]' id='$this->_checkBox' name='$this->_checkBox' value='$userIdArray[$i]' /><br/>
 						</label>";
 		}
 		
@@ -38,6 +37,8 @@ class UserView {
 						</fieldset>
 					</form>
 					</div>";
+
+		echo $users;
 
 		return $userList;
 	}
@@ -57,11 +58,9 @@ class UserView {
 	// Kolla med stack?
 	public function GetUsersToRemove() {
 		if (isset($_POST['check'])) {
-			echo "slep";
             return $_POST['check'];
         }
 		else {
-			echo "yep";
 			return null;
 		};
 	}

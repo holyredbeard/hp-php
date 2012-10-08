@@ -57,7 +57,7 @@ class LoginController {
                     if ($loginView->RememberMe()){
                         
                         // Krypterar lösenordet och skapar cookies hos klienten.
-                        $loginPassword = $encryptHandler->Encrypt($loginPassword);
+                        $loginPassword = $encryptionHandler->Encrypt($loginPassword);
                         $loginView->CreateCookie($loginUsername, $loginPassword);
 
                     }

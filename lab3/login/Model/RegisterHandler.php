@@ -22,6 +22,8 @@ class RegisterHandler {
 		
 		$ret = $this->m_db->RunInsertQuery($stmt);
 
+		$stmt->Close();
+
 		return $ret;
 	}	
 

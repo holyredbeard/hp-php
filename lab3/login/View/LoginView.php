@@ -20,10 +20,10 @@ class LoginView {
     private $_cookiePassword = 'cookiePassword';
 
     // Variablar för meddelanden.
-    const LOGGED_OUT = '<p>Du är utloggad!</p>';
-    const LOGGED_IN = '<p>Du är inloggad!</p>';
-    const EMPTY_FIELD = '<p>Du måste fylla i både användarnamn och lösenord!';
-    const WRONG_USERNAME_OR_PASSWORD = 'Fel användarnamn eller lösenord!</p>';
+    const LOGGED_OUT = '<p>Du are logged out!</p>';
+    const LOGGED_IN = '<p>You are logged in!</p>';
+    const EMPTY_FIELD = '<p>You need to fill in both username and password!';
+    const WRONG_USERNAME_OR_PASSWORD = 'Wrong username and/or password!</p>';
 
     /**
      * Generera och returnera inloggnings-formulär
@@ -151,8 +151,10 @@ class LoginView {
     
     // TODO: Fixa variabel för tiden!
     public function CreateCookie($loginUsername, $loginPassword) {
-        setcookie($this->_cookieUsername, $loginUsername, time() + 6000);
-        setcookie($this->_cookiePassword, $loginPassword, time() + 6000);
+        $cookieExpires = time()+3600*24*365; // 7 days
+
+        setcookie($this->_cookieUsername, $loginUsername, $cookieExpires);
+        setcookie($this->_cookiePassword, $loginPassword, $cookieExpires);
     }
 
     /**

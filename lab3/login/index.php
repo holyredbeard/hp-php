@@ -43,28 +43,17 @@ session_start();
             $loginController = new \Controller\LoginController();
             $userController = new \Controller\UserController();
 
-            /*
-            alternativ till nedan:
-
-            $body .= $loginController->DoControl($loginHandler, $loginView, $registerView);
-
-            if ($body === false){
-                $body .= $registerController->DoControl($registerHandler, $registerView, $loginView);
-            }
-
-             */
-
             // TODO: Kontrollera om det är okej att göra på detta sätt!
             if ($registerView->WantToRegister() || $registerView->TredToRegister()) {
-                $body .= $registerController->DoControl($registerHandler, $registerView, $loginView, $encryptionHandler);
+                $body .= $registerController->DoControl($registerHandler, $registerView, $encryptionHandler, $loginHandler);
             }
             else {
                 $body .= $loginController->DoControl($loginHandler, $loginView, $registerView, $encryptionHandler);
-                
-                // TODO: Kolla om det finns annat sätt att kolla detta, t ex med en private variabel bool som sätts (true/false)
-                if ($loginHandler->IsLoggedIn() === true){
-                    $body .= $userController->DoControl($userHandler, $userView);
-                }
+            }
+
+            // TODO: Kolla om det finns annat sätt att kolla detta, t ex med en private variabel bool som sätts (true/false)
+            if ($loginHandler->IsLoggedIn() === true){
+                $body .= $userController->DoControl($userHandler, $userView);
             }
 
             //Close the database since it is no longer used
@@ -96,5 +85,7 @@ session_start();
         //echo $loggedIn;
         ?>
         </p>
+        <script src="js/jquery-1.7.1.js"></script>
+        <script src="js/external.js"></script>
     </body>
 </html>

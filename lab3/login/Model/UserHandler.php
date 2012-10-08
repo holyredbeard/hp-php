@@ -26,8 +26,40 @@ class UserHandler {
 		return $userArray;
 	}
 
-	public function RemoveUser() {
-		
+	public function RemoveUser(Array $userIds) {
+
+		$c = Array();
+		$s = '';
+
+		foreach ($userIds AS $u) {
+			$c[] = "?";
+			$s.= 's';
+		}
+
+		$inPart = "(" . implode(",", $c) . ")";
+		$query = "DELETE FROM Users WHERE id IN $inPart"; 
+
+		$stmt = $this->m_db->Prepare($query);
+
+		array_unshift($userIds, $s);
+
+		call_user_func_array(array($stmt, 'bind_param'), $this->makeValuesReferenced($userIds));
+
+		$ret = $this->m_db->DeleteUsers($stmt);
+
+		$stmt->Close();
+
+		return $ret;
+
+	}
+
+	public function makeValuesReferenced(Array $arr) {
+    		$refs = array();
+
+    		foreach($arr as $key => $value)
+        		$refs[$key] = &$arr[$key];
+    		return $refs;
+
 	}
 
 }

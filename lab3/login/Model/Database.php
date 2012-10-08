@@ -68,11 +68,27 @@ class Database {
                     throw new \Exception($this->mysqli->error);
             }
             
-            $ret = $stmt->insert_id;
-            
-            $stmt->Close();
-            
-            return $ret;
+            if ($stmt->insert_id) {
+                return true;
+            }
+
+            return false;
+    }
+
+    public function DeleteUsers(\mysqli_stmt $stmt) {
+
+        if ($stmt === FALSE) {
+                    throw new \Exception($this->mysqli->error);
+        }
+
+        //execute the statement
+        if ($stmt->execute() == FALSE) {
+            throw new \Exception($this->mysqli->error);
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
     public function GetUsers(\mysqli_stmt $stmt) {
