@@ -20,9 +20,8 @@ class LoginView {
     private $_cookiePassword = 'cookiePassword';
 
     // Variablar för meddelanden.
-    const LOGGED_OUT = "<p class='succses'>You are logged out!</p>";
     const LOGGED_IN = "<p class='success'>You are logged in!</p>";
-    const EMPTY_FIELD = "<p class='fail'>You need to fill in both username and password!";
+    const LOGGED_OUT = "<p class='succses'>You are logged out!</p>";
     const WRONG_USERNAME_OR_PASSWORD = "<p class='fail'>Wrong username and/or password!</p>";
 
     /**
@@ -153,7 +152,7 @@ class LoginView {
     
     // TODO: Fixa variabel för tiden!
     public function CreateCookie($loginUsername, $loginPassword) {
-        $cookieExpires = time()+3600*24*365; // 7 days
+        $cookieExpires = time() + 3600 * 24 * 7; // 7 days
 
         setcookie($this->_cookieUsername, $loginUsername, $cookieExpires);
         setcookie($this->_cookiePassword, $loginPassword, $cookieExpires);
@@ -163,8 +162,8 @@ class LoginView {
      * Tar bort kakor
      */
     public function DeleteCookie() {
-        setcookie($this->_cookieUsername, "", time() - 60);
-        setcookie($this->_cookiePassword, "", time() - 60);
+        setcookie($this->_cookieUsername, '', time() - 60);
+        setcookie($this->_cookiePassword, '', time() - 60);
         unset($_COOKIE[$this->_cookieUsername]);
         unset($_COOKIE[$this->_cookiePassword]);
     }

@@ -21,7 +21,6 @@ class UserController {
 				$removeTry = $userHandler->RemoveUser($userIds);
 
 				if ($removeTry) {
-					// TODO: Ev. lägga till mer sofistikerat meddelande?
 					$xhtml = \View\UserView::USER_REMOVED;
 				}
 				else {
@@ -33,11 +32,6 @@ class UserController {
 		$userArray = $userHandler->GetAllUsers();
 
 		$xhtml .= $userView->ShowUsers($userArray);
-
-		/* if ($userView->TriedToRemoveUser()) {
-			$userView->GetUserToRemove();
-			$userHandler->RemoveUser()
-		}*/
 
 		return $xhtml;
 

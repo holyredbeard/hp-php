@@ -25,18 +25,16 @@ class RegisterHandler {
 		$stmt->Close();
 
 		return $ret;
-	}	
+	}
 
-	/**
-    * Returnerar true om lösenorden matchar
-    * 
-    * @return boolean
-    */
-	public function CheckPasswordMatch ($password, $password2) {
-		if ($password === $password2) {
-			return true;
+	public function CheckUnique($regUsername, Array $users){
+
+		foreach ($users as $username) {
+			if ($regUsername === $username){
+				return false;
+			}
 		}
 
-		return false;
+		return true;
 	}
 }

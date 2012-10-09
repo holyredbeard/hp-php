@@ -22,11 +22,9 @@ class LoginHandler {
 	 */
 	public function IsLoggedIn() {
 		if($_SESSION[$this->checkLoginState] == $this->sessionCheck) {
-			//echo "is logged in</br>";
 			return true;
 		}
 		else {
-			//echo "is logged out</br>";
 			return false;
 		}
 	}
@@ -135,8 +133,6 @@ class LoginHandler {
 			if ($encryptationTest != $notEncryptedPass){
 				return false;
 			}
-
-			/*if ()*/
 
 			return true;
 		}

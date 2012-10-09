@@ -28,6 +28,11 @@ form {
 }
 
 .fail {
-	background:red;
+	background: red;
+	padding: 2px;
+}
+
+.failMessage {
+	color: red;
 	padding: 2px;
 }

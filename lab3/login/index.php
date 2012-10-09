@@ -45,7 +45,7 @@ session_start();
 
             // TODO: Kontrollera om det är okej att göra på detta sätt!
             if ($registerView->WantToRegister() || $registerView->TredToRegister()) {
-                $body .= $registerController->DoControl($registerHandler, $registerView, $encryptionHandler, $loginHandler);
+                $body .= $registerController->DoControl($registerHandler, $registerView, $encryptionHandler, $loginHandler, $userHandler);
             }
             else {
                 $body .= $loginController->DoControl($loginHandler, $loginView, $registerView, $encryptionHandler);
@@ -80,10 +80,7 @@ session_start();
                 <?php
                 //Skriver ut innehållet i $body till dokumentet.
 
-                //echo $body;
-
                 echo $body;
-                //echo $loggedIn;
                 ?>
                 </p>
             </div>

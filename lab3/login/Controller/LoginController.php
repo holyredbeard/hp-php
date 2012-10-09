@@ -16,7 +16,7 @@ class LoginController {
                               \View\RegisterView $registerView,
                               \Model\EncryptionHandler $encryptionHandler) {
 
-		$controlInfo = "";
+		$controlInfo = '';
 
         // Kontrollerar om användaren loggat in
     	if ($loginHandler->IsLoggedIn()){      
@@ -45,7 +45,7 @@ class LoginController {
     			$loginPassword = $loginView->GetPassword();
 
                 // Kontrollerar om cookies finns och om så inte är fallet krypteras lösenordet
-                if ($loginView->CookieSet() == false) {
+                if ($loginView->CookieSet() == FALSE) {
                     $loginPassword = $encryptionHandler->Encrypt($loginPassword);
                 }
                 else {
@@ -63,14 +63,8 @@ class LoginController {
                         $loginView->CreateCookie($loginUsername, $loginPassword);
 
                     }
-
                     $controlInfo = \View\LoginView::LOGGED_IN;
-
 				}
-                else if ($loginTry === "emptyField"){
-                    $controlInfo = \View\LoginView::EMPTY_FIELD;    // TODO: behöver imlementera detta!
-                }
-
 				else {
                     $controlInfo = \View\LoginView::WRONG_USERNAME_OR_PASSWORD;
 				}

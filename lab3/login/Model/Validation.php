@@ -3,21 +3,22 @@
 namespace Model;
 
 require_once ('View/RegisterView.php');
-require_once ('Model/registerHandler.php');
+//require_once ('Model/registerHandler.php');
 
 
 class Validation {
 
     private $errors = array();
-    private static $kMinPasswordLength = 6;
 
-    $registerHandler = new \Model\RegisterHandler();
+    const kMinPasswordLength = 6;
+    const kMinUsernameLength = 5;
 
-    public function __construct($regUsername, $regPassword, $regPassword2) {
-        $usernameCheck = ValidateUsername($regUsername);
-        $passwordCheck = ValidatePassword($regPassword, $regPassword2);
+    public function DoValidate($regUsername, $regPassword, $regPassword2) {
+        $usernameCheck = $this->ValidateUsername($regUsername);
 
-        if ((!$usernameCheck) || (!$passwordCheck)) {
+        $passwordCheck = $this->ValidatePassword($regPassword, $regPassword2);
+
+        if (!$usernameCheck || !$passwordCheck) {
             return false;
         }
         else {
@@ -26,33 +27,33 @@ class Validation {
     }
     
     public function GetValidationError() {
-        return $this->errorNumber;
+        return $this->errors;
     }
     
     public function ValidateUsername($username) {
-		if (!preg_match('/^[a-zA-Z0-9]{5,}$/', $username)) {
-            $this->errors[] = \View\RegisterView::WRONG_USERNAME_FORMAT;
-            echo 'nej';
+		if (!preg_match('/^[a-z0-9_-]*$/i', $username)) {
+            $this->errors[] = \View\RegisterView::USERNAME_WRONG_FORMAT;
 			return false;
 		}
-        echo 'ja';
+        else if (strlen($username) < self::kMinUsernameLength){
+            $this->errors[] = \View\RegisterView::USERNAME_TOO_SHORT;
+            return false;
+        }
         return true;
     }
 
 	public function ValidatePassword($password, $password2) {
 
-        $checkPasswordMatch = $registerHandler->checkPasswordMatch($password, $password2);
-
-        if (!$checkPasswordMatch) {
-            $this->errorNumber[] = \View\RegisterView::PASSWORD_DID_NOT_MATCH;
+        if ($password != $password2) {
+            $this->errors[] = \View\RegisterView::PASSWORD_DID_NOT_MATCH;
             return false;
         }
 		else if (!preg_match('/^[a-z0-9_-]*$/i', $password)) {
-            $this->errorNumber[] = \View\RegisterView::PASSWORD_WRONG_FORMAT;
+            $this->errors[] = \View\RegisterView::PASSWORD_WRONG_FORMAT;
 			return false;
         }
-        else if (strlen($password) < $this->kMinPasswordLength) {
-            $this->errorNumber[] = \View\RegisterView::PASSWORD_TO_SHORT;
+        else if (strlen($password) < self::kMinPasswordLength) {
+            $this->errors[] = \View\RegisterView::PASSWORD_TOO_SHORT;
             return false;
         }
         return true;

@@ -1,14 +1,20 @@
-$(document).ready(function() {
+$(document).ready(function() {	
+
 	$('#form3').submit(function() {
+	    var submit = true;
+	    $('input[type=checkbox]').each(function () {
+	        if( this.checked ) {
+	            var username = $(this).attr('user');
 
-		$('input[type=checkbox]').each(function () {
-			if( this.checked ) {
-				var confirmBox = confirm('Do you really want to remove the user(s)?');
+	            var confirmBox = confirm('Do you really want to remove the user ' + username + ' ?');
 
+	            
 				if (!confirmBox) {
-					return false;
+					$(this).attr('checked', false); //Uncheck this box so that it isn't submitted
 				}
-		    }
-		});
+	        }
+	    });
+	    return submit;
 	});
+
 });
