@@ -149,8 +149,6 @@ class LoginView {
      * @param String, $loginUsername, användarnamnet
      * @param String, $loginPassword, lösenordet
      */
-    
-    // TODO: Fixa variabel för tiden!
     public function CreateCookie($loginUsername, $loginPassword) {
         $cookieExpires = time() + 3600 * 24 * 7; // 7 days
 
@@ -159,7 +157,7 @@ class LoginView {
     }
 
     /**
-     * Tar bort kakor
+     * Tar bort cookies
      */
     public function DeleteCookie() {
         setcookie($this->_cookieUsername, '', time() - 60);

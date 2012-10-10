@@ -43,7 +43,6 @@ session_start();
             $loginController = new \Controller\LoginController();
             $userController = new \Controller\UserController();
 
-            // TODO: Kontrollera om det är okej att göra på detta sätt!
             if ($registerView->WantToRegister() || $registerView->TredToRegister()) {
                 $body .= $registerController->DoControl($registerHandler, $registerView, $encryptionHandler, $loginHandler, $userHandler);
             }
@@ -51,7 +50,6 @@ session_start();
                 $body .= $loginController->DoControl($loginHandler, $loginView, $registerView, $encryptionHandler);
             }
 
-            // TODO: Kolla om det finns annat sätt att kolla detta, t ex med en private variabel bool som sätts (true/false)
             if ($loginHandler->IsLoggedIn()){
                 $body .= $userController->DoControl($userHandler, $userView);
             }

@@ -72,7 +72,7 @@ class Database {
         if ($stmt->execute() == false) {
             throw new \Exception($this->mysqli->error);
         }
-        $ret = 0;   // TODO: Vad gör denna för nytta?
+        $ret = 0;
         
         if ($stmt->bind_result($field1, $field2, $field3) == FALSE) {
             throw new \Exception($this->mysqli->error);
