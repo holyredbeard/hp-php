@@ -1,10 +1,15 @@
 <?php
 session_start();
 
-	require_once "View/LoginView.php";
+	
 	require_once "Model/LoginHandler.php";
+	require_once "Model/UserHandler.php";
+	require_once "Model/RegisterHandler.php";
+	require_once "Model/EncryptionHandler.php";
+	require_once "Model/Validation.php";
 	require_once "Model/Database.php";
 	require_once "Model/DBConfig.php";
+	require_once "View/LoginView.php";
 
 	$xhtml = "<h1>Tester</h1>";
 
@@ -17,19 +22,68 @@ session_start();
 		 */
 		public static function RunTests(){
 
+			/* --------------- Test av Database() ------------------- */
+
+			$xhtml .= "<hr><h2>Test av klasser</h2>";
+
+			if (\Model\Database::Test() == FALSE) {
+				$xhtml .= "<br/>Testet av Database() misslyckades.<hr/>";
+			}
+			else {
+				$xhtml .= "<br/>Testet av Database() lyckades.<hr/>";
+			}
+
+
+			/* --------------- Test av LoginHandler() ------------------- */
+
 			$db = new \Model\Database();
             $db->Connect(new \Model\DBConfig());
-
-			/* --------------- Test av inloggning ------------------- */
-
-			$xhtml .= "<hr><h2>Test av Login</h2>";
-
 			
-			if (\Model\LoginHandler::Test($db) == false) {
+			if (\Model\LoginHandler::Test($db) == FALSE) {
 				$xhtml .= "<br/>Testet av LoginHandler() misslyckades.<hr/>";
 			}
 			else {
 				$xhtml .= "<br/>Testet av LoginHandler() lyckades.<hr/>";
+			}
+
+
+			/* --------------- Test av Validation() ------------------- */
+
+			if (\Model\Validation::Test() == FALSE) {
+				$xhtml .= "<br/>Testet av Validation() misslyckades.<hr/>";
+			}
+			else {
+				$xhtml .= "<br/>Testet av Validation() lyckades.<hr/>";
+			}
+
+			/* --------------- Test av RegisterHandler() ------------------- */
+
+			$db = new \Model\Database();
+            $db->Connect(new \Model\DBConfig());
+
+			if (\Model\RegisterHandler::Test($db) == FALSE) {
+				$xhtml .= "<br/>Testet av RegisterHandler() misslyckades.<hr/>";
+			}
+			else {
+				$xhtml .= "<br/>Testet av RegisterHandler() lyckades.<hr/>";
+			}
+
+			/* --------------- Test av UserHandler() ------------------- */
+
+			if (\Model\UserHandler::Test($db) == FALSE) {
+				$xhtml .= "<br/>Testet av UserHandler() misslyckades.<hr/>";
+			}
+			else {
+				$xhtml .= "<br/>Testet av UserHandler() lyckades.<hr/>";
+			}
+
+			/* --------------- Test av EncryptionHandler() ------------------- */
+
+			if (\Model\EncryptionHandler::Test($db) == FALSE) {
+				$xhtml .= "<br/>Testet av EncryptionHandler() misslyckades.<hr/>";
+			}
+			else {
+				$xhtml .= "<br/>Testet av EncryptionHandler() lyckades.<hr/>";
 			}
 
 			return $xhtml;

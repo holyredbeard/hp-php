@@ -4,7 +4,7 @@ namespace View;
 
 class RegisterView {
 
-	    // Variablar för formulär.
+	// Variablar för formulär
 	private $_registerUserName = 'username';
 	private $_registerPassword = 'password';
 	private $_registerPassword2 = 'password2';

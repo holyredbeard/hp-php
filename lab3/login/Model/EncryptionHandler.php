@@ -10,7 +10,7 @@ class EncryptionHandler {
 	/**
 	 * Krypterar lösenordet vilket returneras
 	 * 
-	 * @param String, $toBeEncrypted, lösenordet (okrypterat)
+	 * @param String $toBeEncrypted, lösenordet (okrypterat)
 	 * @return String
 	 */
 	public function Encrypt($toBeEncrypted) {
@@ -25,7 +25,7 @@ class EncryptionHandler {
 	/**
 	 * Dekrypterar lösenordet vilket returneras
 	 * 
-	 * @param String, $encrypedText, lösenordet (krypterat)
+	 * @param String $encrypedText, lösenordet (krypterat)
 	 * @return String
 	 */
 	public function Decrypt($encrypedText) {
@@ -37,4 +37,38 @@ class EncryptionHandler {
 		return $trimmedString;
 	}
 
+	/**
+	 * Kedje-tester för applikationen
+	 *
+	 * @return boolean
+	 */
+	public static function Test(Database $db) {
+
+		$encryptionHandler = new \Model\EncryptionHandler();
+
+		/**
+		 * Test 1: Testa så att det går att hämta array med användare.
+		 */
+
+		$password = 'testpass';
+		$encryptedPass = $encryptionHandler->Encrypt($password);
+
+		if ($password === $encryptedPass) {
+			echo "Test 1: Encrypt(), misslyckades (lösenordet blev inte krypterat).";
+			return false;
+		}
+
+
+		/**
+		 * Test 2: Testa så att det går att ta bort flera användare.
+		 */
+		$newpass = $encryptionHandler->Decrypt($encryptedPass);
+
+		if ($newpass != $password) {
+			echo "Test 1: Decrypt(), misslyckades (lösenordet blev inte dekrypterat).";
+			return false;
+		}
+		
+		return true;
+	}
 }

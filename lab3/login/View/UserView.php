@@ -8,14 +8,21 @@ namespace View;
  */
 class UserView {
 
+	// Variablar för formulär
 	private $_checkBox = 'check[]';
 	private $_check = 'check';
 	private $_submitRemove = 'submitRemove';
 
-	// Variablar för meddelanden.
+	// Meddelanden
     const USER_REMOVED = "<p class='success'>User(s) successfully removed!</p>";
     const FAILED_TO_REMOVE_USER = "<p class='fail'>Failed to remove user(s)!</p>";
 
+
+    /**
+     * Funktion som genererar och returnerar formuläret för att visa och ta bort användare
+     * @param Array $userArray
+     * @return String
+     */
 	public function ShowUsers(Array $userArray) {
 
 		$userIdArray = $userArray[0];
@@ -44,6 +51,10 @@ class UserView {
 		return $userList;
 	}
 
+
+	/**
+	 * Kontrollerar om användaren klickat på submit-knappen
+	 */
 	public function TriedToRemoveUser() {
 		if (isset($_POST[$this->_submitRemove])) {
 			return true;        
@@ -54,9 +65,9 @@ class UserView {
 
 	}
 
-	// TODO: Kolla vad göra här då det är strängberoenden. Dock ser jag inget annat alternativ.
-	// Anledningen är att man inte kan hämta ut check[], då den egentligen endast heter check.
-	// Kolla med stack?
+	/**
+	 * Hämtar och returnerar de användare användaren klickat i som ska tas bort
+	 */
 	public function GetUsersToRemove() {
 		if (isset($_POST[$this->_check])) {
             return $_POST[$this->_check];

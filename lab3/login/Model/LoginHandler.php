@@ -32,8 +32,8 @@ class LoginHandler {
 	/**
 	 * Logga in användaren
 	 * 
-	 * @param String, $username, användarnamnet
-	 * @param String, $password, lösenordet
+	 * @param String $username, användarnamnet
+	 * @param String $password, lösenordet
 	 * @return boolean
 	 */
 	public function DoLogin($username, $password){
@@ -70,67 +70,73 @@ class LoginHandler {
 
 	/**
 	 * Kedje-tester för applikationen
-	 *
+	 * @param Database $db
 	 * @return boolean
 	 */
 	public static function Test(Database $db) {
 
-			$LoginHandler = new LoginHandler($db);
+			$loginHandler = new LoginHandler($db);
 			$loginView = new \View\LoginView();
 
-			$LoginHandler->DoLogout($loginView);	// loggar ut användaren som förberedelse för testerna.
+			$loginHandler->DoLogout($loginView);	// loggar ut användaren som förberedelse för testerna.
 				
-			// Test 1: Kolla så att man inte är inloggad.
-			if($LoginHandler->IsLoggedIn()){
-				echo "Test 1: DoLogut(), misslyckades (är inloggad).";
+			/**
+			 * Test 1: Testa så att man inte är inloggad.
+			 */
+			 
+			if($loginHandler->IsLoggedIn()){
+				echo "LoginHandler - Test 1: DoLogut(), misslyckades (är inloggad).";
 				return false;
 			}
 			
-			// Test 2: Kolla så att det inte går att logga in med fel lösenord.
-			if ($LoginHandler->DoLogin("henke", "4321")){
-				echo "Test 2: DoLogin(), misslyckades (det går att logga in med fel lösenord).";
+
+			/**
+			 * Test 2: Testa så att det inte går att logga in med fel lösenord.
+			 */
+			
+			if ($loginHandler->DoLogin("testuser01", "wrongPass")){
+				echo "LoginHandler - Test 2: DoLogin(), misslyckades (det går att logga in med fel lösenord).";
 				return false;
 			}
 			
-			// Test 3: Kolla så att det går att logga in.
-			if ($LoginHandler->DoLogin("henke", "1234") == false){
-				echo "Test 3: DoLogin(), misslyckades (det går inte att logga in med korrekta uppgifter).";
+
+			/**
+			 * Test 3: Testa så att det går att logga in.
+			 */
+			
+			if ($loginHandler->DoLogin("testuser01", "zLziXN9DAEAkT4A4TGGPRQdVqPVznsugBxquZCvz2ME=") == FALSE){
+				echo "LoginHandler - Test 3: DoLogin(), misslyckades (det går inte att logga in med korrekta uppgifter).";
 				return false;
 			}
 
-			// Test 4: Kolla så att man är inloggad.
-			if ($LoginHandler->IsLoggedIn() == false){
-				echo "Test 4: IsLoggedIn(), misslyckades (var ej inloggad).";
+
+			/**
+			 * Test 4: Testa så att man är inloggad.
+			 */
+			
+			if ($loginHandler->IsLoggedIn() == FALSE){
+				echo "LoginHandler - Test 4: IsLoggedIn(), misslyckades (var ej inloggad).";
 				return false;
 			}
 
-			$LoginHandler->DoLogout($loginView);	// loggar ut användaren igen
+			$loginHandler->DoLogout($loginView);	// loggar ut användaren igen
 
-			// Test 5: Kolla så att man inte är inloggad.
-			if ($LoginHandler->IsLoggedIn()){
-				echo "Test 5: IsLoggedIn(), misslyckades (är fortfarande inloggad).";
+
+			/**
+			 * Test 5: Testa så att man inte är inloggad.
+			 */
+			
+			if ($loginHandler->IsLoggedIn()){
+				echo "LoginHandler - Test 5: IsLoggedIn(), misslyckades (är fortfarande inloggad).";
 				return false;
 			}
 
-			// Test 6: Kolla så att man inte kan logga in med fel lösenord.
-			if ($LoginHandler->DoLogin("heke", "1235")){
-				echo "Test 6: DoLogin(), misslyckades (det gick att logga in med fel användarnamn och lösenord).";
-				return false;
-			}
-
-			// Test 7: Kolla så kryptering fungerar.
-			$notEncryptedPass = "testPass";
-			$encryptationTest = $LoginHandler->Encrypt($notEncryptedPass);
-
-			if ($notEncryptedPass === $encryptationTest) {
-				echo "Test 7: Encrypt(), misslyckades (lösenordet blev inte krypterat).";
-				return false;
-			}
-
-			// Test 8: Kolla så dekryptering fungerar.
-			$encryptationTest = $LoginHandler->decrypt($encryptationTest);
-
-			if ($encryptationTest != $notEncryptedPass){
+			/**
+			 * Test 6: Testa så att man inte kan logga in med fel användarnamn.
+			 */
+			
+			if ($loginHandler->DoLogin("testuser01", "654321")){
+				echo "LoginHandler - Test 6: DoLogin(), misslyckades (det gick att logga in med fel användarnamn).";
 				return false;
 			}
 
